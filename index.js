@@ -31,7 +31,7 @@ function SoilMoistureAccessory(log, config) {
   informationService
     .setCharacteristic(Characteristic.Manufacturer, "Waveshare")
     .setCharacteristic(Characteristic.Model, "Moisture Sensor")
-    .setCharacteristic(Characteristic.SerialNumber, `${os.hostname}-${0}`)
+    .setCharacteristic(Characteristic.SerialNumber, `${os.hostname}-0`)
     .setCharacteristic(Characteristic.FirmwareRevision, require('./package.json').version);
 
   let humidityService = new Service.HumiditySensor();
@@ -44,7 +44,7 @@ function SoilMoistureAccessory(log, config) {
   if (this.enableFakeGato) {
     this.fakeGatoHistoryService = new FakeGatoHistoryService("weather", this, {
       storage: 'fs',
-      filename: `DHT22-${os.hostname}-${this.pin}.json`,
+      filename: `SoilMoisture-${os.hostname}-0.json`,
       folder: this.fakeGatoStoragePath
     });
   }
