@@ -4,6 +4,8 @@ This is a Homebridge plugin for an analog soil moisture sensor, working on the R
 
 The actual sensor values are read in by an Arduino, communicated to an Onion Omega2 over UART, and then sent over MQTT to a Raspberry Pi.
 
+<img src="/docs/eve.png?raw=true" style="margin: 5px"> <img src="/docs/home.png?raw=true" style="margin: 5px">
+
 ## Configuration
 
 | Field name           | Description                                                          | Type / Unit    | Default value       | Required? |
