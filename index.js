@@ -67,7 +67,8 @@ Object.defineProperty(SoilMoistureAccessory.prototype, "currentMoisture", {
   set: function(moistureReading) {
     moistureReading = Math.min(moistureReading, this.maxAnalogReading);
     moistureReading = Math.max(moistureReading, this.minAnalogReading);
-    this._currentMoisture = (moistureReading - this.minAnalogReading) / (this.maxAnalogReading - this.minAnalogReading) * 100;
+    // For capacitive soil moisture sensors, lower value = higher moisture content
+    this._currentMoisture = 100 - (moistureReading - this.minAnalogReading) / (this.maxAnalogReading - this.minAnalogReading) * 100;
     
     this.humidityService.getCharacteristic(Characteristic.CurrentRelativeHumidity)
       .updateValue(this._currentMoisture);
