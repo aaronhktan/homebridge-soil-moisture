@@ -1,5 +1,6 @@
 from collections import deque
 import serial
+import sys
 
 import paho.mqtt.client as mqtt # For MQTT
 
@@ -9,7 +10,11 @@ def on_connect(client, userdata, flags, rc):
 client = mqtt.Client()
 client.on_connect = on_connect
 
-client.connect('192.168.0.198', 1883, 60)
+ip = '192.168.0.38'
+if len(sys.argv) == 1:
+	ip = sys.argv[1]	
+client.connect(ip, 1883, 60)
+client.loop_start()
 
 serialPort = serial.Serial('/dev/ttyS1', 9600, timeout=2)
 if not serialPort.isOpen():
@@ -37,4 +42,5 @@ while True:
 
   if not t % 60: # Only publish once every minute
     client.publish('plants/soilmoisture', str(avg))
- 
+    client.loop(timeout=1.0, max_packets=1)
+
