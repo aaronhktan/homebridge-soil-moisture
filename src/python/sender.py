@@ -11,8 +11,8 @@ client = mqtt.Client()
 client.on_connect = on_connect
 
 ip = '192.168.0.38'
-if len(sys.argv) == 1:
-	ip = sys.argv[1]	
+if len(sys.argv) == 2:
+  ip = sys.argv[1]	
 client.connect(ip, 1883, 60)
 client.loop_start()
 
