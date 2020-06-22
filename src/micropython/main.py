@@ -4,7 +4,7 @@ from umqtt.robust import MQTTClient
 import utime
 
 adc = machine.ADC(0)
-c = MQTTClient("NodeMCU_client", "<MQTT server IP here>")
+c = MQTTClient('NodeMCU_client', '<MQTT server IP here>')
 
 # Print diagnostic messages with retries/reconnects
 c.DEBUG = True
@@ -31,7 +31,7 @@ while True:
     print(avg)
 
     if not t % 60:
-        c.publish("plants_nodemcu/soilmoisture", str(avg))
+        c.publish('plants_nodemcu/soilmoisture', str(avg))
 
     utime.sleep_ms(1000)
 
