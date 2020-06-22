@@ -1,6 +1,5 @@
 const moment = require('moment');
 const mqtt = require('mqtt');
-const os = require('os');
 
 var Service, Characteristic;
 
@@ -31,7 +30,7 @@ function SoilMoistureAccessory(log, config) {
   informationService
     .setCharacteristic(Characteristic.Manufacturer, "Waveshare")
     .setCharacteristic(Characteristic.Model, "Moisture Sensor")
-    .setCharacteristic(Characteristic.SerialNumber, `${os.hostname}-0`)
+    .setCharacteristic(Characteristic.SerialNumber, `${this.mqttConfig.soilMoistureTopic}`)
     .setCharacteristic(Characteristic.FirmwareRevision, require('./package.json').version);
 
   let humidityService = new Service.HumiditySensor();
@@ -44,7 +43,7 @@ function SoilMoistureAccessory(log, config) {
   if (this.enableFakeGato) {
     this.fakeGatoHistoryService = new FakeGatoHistoryService("weather", this, {
       storage: 'fs',
-      filename: `SoilMoisture-${os.hostname}-0.json`,
+      filename: `SoilMoisture-${this.mqttConfig.soilMoistureTopic.replace("/", "-")}.json`,
       folder: this.fakeGatoStoragePath
     });
   }
