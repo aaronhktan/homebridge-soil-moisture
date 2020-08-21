@@ -10,7 +10,7 @@ module.exports = homebridge => {
   Characteristic = homebridge.hap.Characteristic;
   FakeGatoHistoryService = require('fakegato-history')(homebridge);
 
-  homebridge.registerAccessory("homebridge-soil-moisture", "Soil Moisture Sensor", SoilMoistureAccessory);
+  homebridge.registerAccessory('homebridge-soil-moisture', 'Soil Moisture Sensor', SoilMoistureAccessory);
 }
 
 function SoilMoistureAccessory(log, config) {
@@ -28,8 +28,8 @@ function SoilMoistureAccessory(log, config) {
 
   let informationService = new Service.AccessoryInformation();
   informationService
-    .setCharacteristic(Characteristic.Manufacturer, "Waveshare")
-    .setCharacteristic(Characteristic.Model, "Moisture Sensor")
+    .setCharacteristic(Characteristic.Manufacturer, 'Waveshare')
+    .setCharacteristic(Characteristic.Model, 'Moisture Sensor')
     .setCharacteristic(Characteristic.SerialNumber, `${this.mqttConfig.soilMoistureTopic}`)
     .setCharacteristic(Characteristic.FirmwareRevision, require('./package.json').version);
 
@@ -41,9 +41,9 @@ function SoilMoistureAccessory(log, config) {
   this.leakService = leakService;
 
   if (this.enableFakeGato) {
-    this.fakeGatoHistoryService = new FakeGatoHistoryService("weather", this, {
+    this.fakeGatoHistoryService = new FakeGatoHistoryService('weather', this, {
       storage: 'fs',
-      filename: `SoilMoisture-${this.mqttConfig.soilMoistureTopic.replace("/", "-")}.json`,
+      filename: `SoilMoisture-${this.mqttConfig.soilMoistureTopic.replace('/', '-')}.json`,
       folder: this.fakeGatoStoragePath
     });
   }
@@ -62,7 +62,7 @@ function SoilMoistureAccessory(log, config) {
 }
 
 
-Object.defineProperty(SoilMoistureAccessory.prototype, "currentMoisture", {
+Object.defineProperty(SoilMoistureAccessory.prototype, 'currentMoisture', {
   set: function(moistureReading) {
     moistureReading = Math.min(moistureReading, this.maxAnalogReading);
     moistureReading = Math.max(moistureReading, this.minAnalogReading);
@@ -96,7 +96,7 @@ Object.defineProperty(SoilMoistureAccessory.prototype, "currentMoisture", {
 
 SoilMoistureAccessory.prototype.setupMQTT = function() {
   if (!this.mqttConfig) {
-    this.log.error("No MQTT config found");
+    this.log.error('No MQTT config found');
     return;
   }
   
@@ -105,7 +105,7 @@ SoilMoistureAccessory.prototype.setupMQTT = function() {
   
   this.mqttClient = mqtt.connect(this.mqttURL);
 
-  this.mqttClient.on("connect", () => {
+  this.mqttClient.on('connect', () => {
     this.log(`MQTT client connected to ${this.mqttURL}`);
     this.mqttClient.subscribe(this.soilMoistureTopic, (err) => {
       if (!err) {
@@ -114,11 +114,11 @@ SoilMoistureAccessory.prototype.setupMQTT = function() {
     });
   });
 
-  this.mqttClient.on("message", (topic, message) => {
+  this.mqttClient.on('message', (topic, message) => {
     this.onMQTTMessage(topic, message)
   });
 
-  this.mqttClient.on("error", (err) => {
+  this.mqttClient.on('error', (err) => {
     this.log(`MQTT client error: ${err}`);
     client.end();
   });

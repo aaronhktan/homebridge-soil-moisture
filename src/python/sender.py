@@ -18,7 +18,7 @@ client.loop_start()
 
 serialPort = serial.Serial('/dev/ttyS1', 9600, timeout=2)
 if not serialPort.isOpen():
-  print("Error: Failed to initialize serial port")
+  print('Error: Failed to initialize serial port')
   exit()
 
 cache = deque()
