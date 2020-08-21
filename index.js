@@ -30,7 +30,7 @@ function SoilMoistureAccessory(log, config) {
   informationService
     .setCharacteristic(Characteristic.Manufacturer, 'Waveshare')
     .setCharacteristic(Characteristic.Model, 'Moisture Sensor')
-    .setCharacteristic(Characteristic.SerialNumber, `${this.mqttConfig.soilMoistureTopic}`)
+    .setCharacteristic(Characteristic.SerialNumber, `${this.mqttConfig.soilMoistureTopic.replace("/", "-")}`)
     .setCharacteristic(Characteristic.FirmwareRevision, require('./package.json').version);
 
   let humidityService = new Service.HumiditySensor();
